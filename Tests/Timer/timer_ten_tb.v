@@ -5,38 +5,36 @@ module timer_ten_tb();
 reg clk=1;
 reg loadn=1;
 reg clrn=1;
-reg en=0;
+reg en=1;
 reg [3:0] in;
 wire [3:0] out;
 wire tc;
 wire zero;
 
 timer_ten DUT(in,loadn,clk,clrn,en,out,tc,zero);
+parameter NUM = 8;
 
+//CLOCK
+always #5 clk = ~clk;    
 
-always
-begin
-    #10 clk = ~clk;    
-end
 
 always @(posedge clk && loadn==1)
 begin
-    $display("out = %d || tc = %d || zero = %d", out,tc,zero);    
+    //$display("out = %d || tc = %d || zero = %d", out,tc,zero); 
+    if(out == NUM+1 && loadn == 1) $finish; 
+
 end    
 
 initial 
     begin
-        in = 9;
-        while(in>=0)
-        begin
-        if(in==0) $finish;
-        $display("TESTE IN = %d", in);
+        $dumpfile("timer_ten.vcd");
+        $dumpvars;
+        //Carregar 8 no contador e rodar até o 9. 
         loadn = 0;
-        en = 1;
-        in <= in - 1;
-        #20 loadn = 1;
-        #(10*10*2);
-        end
+        in = NUM;
+        #10 loadn = 1;
+
 
     end
+
 endmodule

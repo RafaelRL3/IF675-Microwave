@@ -1,47 +1,41 @@
 module timer_ten(input wire [3:0] data, input wire loadn,input wire clk,input wire clrn, input wire en,
-               output reg [3:0]  out, output reg tc, output reg zero );
+               output reg [3:0]  out, output wire tc, output reg zero );
 
-always @(negedge clrn)
-begin
-    if(~clrn)
-    begin
-        out = 0;
-        tc = 0; 
-        zero = 1;
-    end
+
+assign tc = (en & ~out[0] & ~out[1] & ~out[2] & ~out[3]);
+
+initial begin
+    out = 0;
 end
 
-always @(posedge clk)
+always @(posedge clk,negedge clrn)
     begin
-        
-        if(en)
+        if(~clrn)
         begin
-            if(~loadn)
+            out <= 0;
+            zero <= 1;
+        end
+        else if(~loadn)
             begin
                 out <= data;
-                tc<= (data==0)? 1 : 0;
                 zero <= (data==0)? 1 : 0;
             end
-            else 
+        else if(en)
+        begin
+            if(out==0)
             begin
-                if(out==0)
-                begin
-                    out <= 9;
-                    tc <= 0;
-                    zero <= 0;
-                end
-                else if(out==1)
-                begin
-                    out <= out-1;
-                    tc <= 1;
-                    zero <= 1;
-                end
-                else
-                begin
-                    out <= out-1;
-                    tc <= 0;
-                    zero <= 0;
-                end
+                out <= 9;
+                zero <= 0;
+            end
+            else if(out==1)
+            begin
+                out <= out-1;
+                zero <= 1;
+            end
+            else
+            begin
+                out <= out-1;
+                zero <= 0;
             end
         end
     end
