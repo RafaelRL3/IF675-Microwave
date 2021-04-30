@@ -2,6 +2,8 @@ module latchsr(
     input wire S,R,
     output reg mag_on
 );
+
+
     always @(S or R) begin
         if(R && !S)
             begin

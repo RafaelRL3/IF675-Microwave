@@ -19,7 +19,7 @@ module logicC (
         else 
             begin
                 S = 0;
-                R = 0;
+                R = 1;
             end
     end
 endmodule

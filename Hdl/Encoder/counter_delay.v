@@ -1,24 +1,21 @@
 module counter_delay ( input wire clk, input wire clr, output reg out);
 
-reg [3:0] counter=0;
-reg pushed;
+reg [2:0] counter=0;
 
-    initial pushed = 0;
 
-always @(posedge clr) begin
 
-    counter = 0;
-    pushed <= 1;
-end
-
-always@(clk)
-begin
-    if(pushed)
-    begin
-    if(counter<14) counter = counter+1;
-    else pushed = 0;
-    out = ((counter==8 |counter==9) & pushed) ? 1:0;
+always @(posedge clk) begin
+    if(clr) begin
+        out <= 0;
+        counter<=0;
     end
+    else
+    begin
+        if(counter<7) counter <= counter+1;
+        out <= (counter==4) ? 1:0;
+    end
+    
 end
+
     
 endmodule

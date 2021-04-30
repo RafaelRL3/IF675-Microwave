@@ -17,7 +17,7 @@ initial
     //Carregando 3 no codificador
     enable = 1;
     i = 0;
-    for(i=0;i<10;i= i+1)
+    for(i=0;i<10;i = i+1)
     begin
       y = (1<<i);
       #10 enable = 0;
