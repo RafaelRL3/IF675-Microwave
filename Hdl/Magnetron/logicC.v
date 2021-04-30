@@ -8,11 +8,13 @@ module logicC (
             begin
                 S = 0;
                 R = 1;
+                //mag_on = 0
             end
         else if(!startN && door_closed)
             begin
                 S = 1;
                 R = 0;
+                //mag_on = 1 
             end
         else 
             begin

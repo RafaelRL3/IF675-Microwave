@@ -3,12 +3,7 @@ module counter_delay ( input wire clk, input wire clr, output reg out);
 reg [3:0] counter=0;
 reg pushed;
 
-
-initial begin
-    $dumpfile("counter_delay.vcd");
-    $dumpvars;
-    pushed = 0;
-end
+    initial pushed = 0;
 
 always @(posedge clr) begin
 
